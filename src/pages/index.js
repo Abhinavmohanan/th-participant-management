@@ -8,6 +8,7 @@ import TeamMembersModal from "@/components/TeamMembersModal/TeamMembersModal";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [variable, setVariable] = useState(true);
   const [teams, setTeams] = useState([]);
   const [users, setUsers] = useState([]);
   const [teamId, setTeamId] = useState();
@@ -15,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     getTeams();
-  }, []);
+  }, [variable]);
 
   const getTeams = async () => {
     const response = await axios.get("/api/teams");
@@ -39,6 +40,34 @@ export default function Home() {
     setTeams(distinctTeams);
   };
 
+  const updateToTeamSelected = async (teamId) => {
+    const { data, error } = await axios.put("/api/teams", {
+      id: teamId,
+      isSelected: true,
+    });
+    if (error) {
+      console.log(error);
+    } else {
+      setVariable(!variable);
+    }
+  };
+
+  const updateToTeamUnSelected = async (teamId) => {
+    const { data, error } = await axios.put("/api/teams", {
+      id: teamId,
+      isSelected: false,
+    });
+    if (error) {
+      console.log(error);
+    } else {
+      setVariable(!variable);
+    }
+  };
+
+  const isSelected = (teamId) => {
+    return teams.find((team) => team.id === teamId).isSelected;
+  };
+
   const Modal = () => {
     return (
       <TeamMembersModal
@@ -59,6 +88,7 @@ export default function Home() {
       idea: team.idea,
       suggestions: team.suggestions,
       tracks: team.tracks,
+      isSelected: team.isSelected,
     };
   });
 
@@ -82,6 +112,28 @@ export default function Home() {
           View Team
         </Button>
       ),
+    },
+    {
+      field: "col5",
+      headerName: "Selected",
+      width: "100",
+      renderCell: (props) =>
+        isSelected(props.row.id) ? (
+          <Button
+            variant="contained"
+            onClick={() => updateToTeamUnSelected(props.row.id)}
+          >
+            Yes
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => updateToTeamSelected(props.row.id)}
+          >
+            No
+          </Button>
+        ),
     },
   ];
 
@@ -134,6 +186,13 @@ export default function Home() {
           >
             * Use Landscape Mode while Printing.
           </h3>
+          <h3
+            style={{
+              textAlign: "center",
+            }}
+          >
+            * Click on Button to Change Selection Status.
+          </h3>
           <div
             style={{
               display: "flex",
@@ -151,6 +210,7 @@ export default function Home() {
                     col2: row.idea,
                     col3: row.suggestions,
                     col4: row.tracks,
+                    col5: row.isSelected,
                   };
                 })}
                 columns={columns}
