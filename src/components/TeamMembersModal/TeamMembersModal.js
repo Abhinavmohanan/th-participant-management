@@ -5,13 +5,26 @@ import { ClockLoader } from "react-spinners";
 
 import axios from "axios";
 
-function TeamMembersModal({ open, handleClose, teamId, teamName }) {
+function TeamMembersModal({ open, handleClose, teamId, teamName, users }) {
   const [loading, setLoading] = useState(true);
   const [participants, setParticipants] = useState([]);
 
   const getParticipantsByTeam = async () => {
-    const response = await axios.get(`/api/teams/${teamId}`);
-    setParticipants(response.data);
+    const participants = users
+      .filter((user) => user["technohack-teams"].id === teamId)
+      .map((user) => {
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          institutionName: user.institutionName,
+          gradYear: user.gradYear,
+          linkedin: user.linkedin,
+          github: user.github,
+          devfolio: user.devfolio,
+        };
+      });
+    setParticipants(participants);
     setLoading(false);
   };
 
@@ -124,10 +137,9 @@ function TeamMembersModal({ open, handleClose, teamId, teamName }) {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "100vh",
             }}
           >
-            <ClockLoader color="#3f51b5" size={100} />
+            <ClockLoader color="#3f51b5" size={40} />
           </div>
         ) : (
           <div

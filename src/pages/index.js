@@ -9,6 +9,7 @@ import TeamMembersModal from "@/components/TeamMembersModal/TeamMembersModal";
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [teams, setTeams] = useState([]);
+  const [users, setUsers] = useState([]);
   const [teamId, setTeamId] = useState();
   const [open, setOpen] = useState(false);
 
@@ -18,12 +19,24 @@ export default function Home() {
 
   const getTeams = async () => {
     const response = await axios.get("/api/teams");
-    setTeams(response.data);
+    setUsers(response.data);
+    findDistinctTeamsFromUsers(response.data);
     setLoading(false);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const findDistinctTeamsFromUsers = (users) => {
+    const distinctTeams = users
+      .map((user) => user["technohack-teams"])
+      .flat()
+      .filter((team) => team.id !== null)
+      .filter(
+        (team, index, self) => index === self.findIndex((t) => t.id === team.id)
+      );
+    setTeams(distinctTeams);
   };
 
   const Modal = () => {
@@ -34,6 +47,7 @@ export default function Home() {
         handleClose={handleClose}
         teamId={teamId}
         teamName={teams.find((team) => team.id === teamId).name}
+        users={users}
       />
     );
   };
@@ -44,10 +58,10 @@ export default function Home() {
       name: team.name,
       idea: team.idea,
       suggestions: team.suggestions,
-      tracks: team.tracks.join(" , "),
-      interesting: team.interesting,
+      tracks: team.tracks,
     };
   });
+
   const columns = [
     { field: "id", headerName: "Team ID", width: 100 },
     { field: "col1", headerName: "Team Name", width: 300 },
