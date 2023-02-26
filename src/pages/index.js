@@ -109,47 +109,45 @@ export default function Home() {
       field: "col2",
       headerName: "Idea",
       width: 200,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            setIsSuggestion(false);
-            setTeamName(params.row.col1);
-            if (params.row.col2 === null || params.row.col2 === "") {
-              setIdea("No Idea");
-            } else {
+      renderCell: (params) =>
+        params.row.col2 === null || params.row.col2 === "" ? (
+          "Nil"
+        ) : (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              setIsSuggestion(false);
+              setTeamName(params.row.col1);
               setIdea(params.row.col2);
-            }
-            setOpen1(true);
-          }}
-        >
-          View Idea
-        </Button>
-      ),
+              setOpen1(true);
+            }}
+          >
+            View Idea
+          </Button>
+        ),
     },
     {
       field: "col3",
       headerName: "Suggestions",
       width: 130,
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={() => {
-            setIsSuggestion(true);
-            setTeamName(params.row.col1);
-            if (params.row.col3 === null || params.row.col3 === "") {
-              setIdea("No Suggestions");
-            } else {
+      renderCell: (params) =>
+        params.row.col2 === null || params.row.col2 === "" ? (
+          "Nil"
+        ) : (
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={() => {
+              setIsSuggestion(true);
+              setTeamName(params.row.col1);
               setIdea(params.row.col3);
-            }
-            setOpen1(true);
-          }}
-        >
-          View
-        </Button>
-      ),
+              setOpen1(true);
+            }}
+          >
+            View
+          </Button>
+        ),
     },
     {
       field: "Edit",

@@ -40,49 +40,58 @@ function TeamMembersModal({ open, handleClose, teamId, teamName, users }) {
       field: "col5",
       headerName: "Linkedin",
 
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={() => {
-            if (params.value) window.open(params.value);
-          }}
-        >
-          Linkedin
-        </Button>
-      ),
+      renderCell: (params) =>
+        params.value === null || params.value === "" ? (
+          "Nil"
+        ) : (
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={() => {
+              if (params.value) window.open(params.value);
+            }}
+          >
+            Linkedin
+          </Button>
+        ),
       width: 150,
     },
     {
       field: "col6",
       headerName: "Github",
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => {
-            if (params.value) window.open(params.value);
-          }}
-        >
-          Github
-        </Button>
-      ),
+      renderCell: (params) =>
+        params.value === null || params.value === "" ? (
+          "Nil"
+        ) : (
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => {
+              if (params.value) window.open(params.value);
+            }}
+          >
+            Github
+          </Button>
+        ),
       width: 150,
     },
     {
       field: "col7",
       headerName: "Devfolio",
-      renderCell: (params) => (
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={() => {
-            if (params.value) window.open(params.value);
-          }}
-        >
-          Devfolio
-        </Button>
-      ),
+      renderCell: (params) =>
+        params.value === null || params.value === "" ? (
+          "Nil"
+        ) : (
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              if (params.value) window.open(params.value);
+            }}
+          >
+            Devfolio
+          </Button>
+        ),
       width: 150,
     },
   ];
