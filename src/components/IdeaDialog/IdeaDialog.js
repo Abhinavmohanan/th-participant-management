@@ -26,6 +26,7 @@ function TeamMembersModal({ open, isSuggestion, handleClose, teamName, idea }) {
         id="alert-dialog-title"
         sx={{
           textAlign: "center",
+          fontSize: "1.5rem",
         }}
       >
         <b>{teamName}</b> {isSuggestion ? "Suggestions" : "Idea"}
