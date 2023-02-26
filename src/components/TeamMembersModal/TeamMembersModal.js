@@ -3,8 +3,6 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Dialog, DialogContent, Button, DialogTitle } from "@mui/material";
 import { ClockLoader } from "react-spinners";
 
-import axios from "axios";
-
 function TeamMembersModal({ open, handleClose, teamId, teamName, users }) {
   const [loading, setLoading] = useState(true);
   const [participants, setParticipants] = useState([]);
@@ -44,10 +42,10 @@ function TeamMembersModal({ open, handleClose, teamId, teamName, users }) {
 
       renderCell: (params) => (
         <Button
-          variant="contained"
-          color="primary"
+          variant="outlined"
+          color="error"
           onClick={() => {
-            window.open(params.value);
+            if (params.value) window.open(params.value);
           }}
         >
           Linkedin
@@ -60,10 +58,10 @@ function TeamMembersModal({ open, handleClose, teamId, teamName, users }) {
       headerName: "Github",
       renderCell: (params) => (
         <Button
-          variant="contained"
-          color="primary"
+          variant="outlined"
+          color="secondary"
           onClick={() => {
-            window.open(params.value);
+            if (params.value) window.open(params.value);
           }}
         >
           Github
@@ -76,10 +74,10 @@ function TeamMembersModal({ open, handleClose, teamId, teamName, users }) {
       headerName: "Devfolio",
       renderCell: (params) => (
         <Button
-          variant="contained"
+          variant="outlined"
           color="primary"
           onClick={() => {
-            window.open(params.value);
+            if (params.value) window.open(params.value);
           }}
         >
           Devfolio

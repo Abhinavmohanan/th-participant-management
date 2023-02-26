@@ -5,14 +5,19 @@ import axios from "axios";
 import { ClockLoader } from "react-spinners";
 import Head from "next/head";
 import TeamMembersModal from "@/components/TeamMembersModal/TeamMembersModal";
+import IdeaDialog from "@/components/IdeaDialog/IdeaDialog";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [variable, setVariable] = useState(true);
   const [teams, setTeams] = useState([]);
+  const [teamName, setTeamName] = useState();
+  const [idea, setIdea] = useState();
+  const [isSuggestion, setIsSuggestion] = useState(false);
   const [users, setUsers] = useState([]);
   const [teamId, setTeamId] = useState();
   const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
 
   useEffect(() => {
     getTeams();
@@ -27,6 +32,10 @@ export default function Home() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClose1 = () => {
+    setOpen1(false);
   };
 
   const findDistinctTeamsFromUsers = (users) => {
@@ -94,16 +103,61 @@ export default function Home() {
 
   const columns = [
     { field: "id", headerName: "Team ID", width: 100 },
-    { field: "col1", headerName: "Team Name", width: 300 },
+    { field: "col1", headerName: "Team Name", width: 200 },
     { field: "col4", headerName: "Tracks", width: 500 },
-    { field: "col2", headerName: "Idea", width: 400 },
-    { field: "col3", headerName: "Suggestions", width: 130 },
+    {
+      field: "col2",
+      headerName: "Idea",
+      width: 200,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            setIsSuggestion(false);
+            setTeamName(params.row.col1);
+            if (params.row.col2 === null || params.row.col2 === "") {
+              setIdea("No Idea");
+            } else {
+              setIdea(params.row.col2);
+            }
+            setOpen1(true);
+          }}
+        >
+          View Idea
+        </Button>
+      ),
+    },
+    {
+      field: "col3",
+      headerName: "Suggestions",
+      width: 130,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() => {
+            setIsSuggestion(true);
+            setTeamName(params.row.col1);
+            if (params.row.col3 === null || params.row.col3 === "") {
+              setIdea("No Suggestions");
+            } else {
+              setIdea(params.row.col3);
+            }
+            setOpen1(true);
+          }}
+        >
+          View
+        </Button>
+      ),
+    },
     {
       field: "Edit",
       headerName: "View",
-      width: "100",
+      width: "130",
       renderCell: (props) => (
         <Button
+          variant="outlined"
           onClick={() => {
             setTeamId(props.row.id);
             setOpen(true);
@@ -213,10 +267,10 @@ export default function Home() {
                     col5: row.isSelected,
                   };
                 })}
-                columns={columns}
                 components={{
                   Toolbar: GridToolbar,
                 }}
+                columns={columns}
                 componentsProps={{
                   toolbar: {
                     showQuickFilter: true,
@@ -231,6 +285,16 @@ export default function Home() {
         </div>
       </div>
       {teamId && <Modal teamId={teamId} />}
+      {teamName && (
+        <IdeaDialog
+          open={open1}
+          isSuggestion={isSuggestion}
+          setOpen={setOpen1}
+          handleClose={handleClose1}
+          teamName={teamName}
+          idea={idea}
+        />
+      )}
     </>
   );
 }
