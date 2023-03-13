@@ -6,7 +6,6 @@ import { ClipLoader, ClockLoader } from "react-spinners";
 import Head from "next/head";
 import TeamMembersModal from "@/components/TeamMembersModal/TeamMembersModal";
 import IdeaDialog from "@/components/IdeaDialog/IdeaDialog";
-import { width } from "@mui/system";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);

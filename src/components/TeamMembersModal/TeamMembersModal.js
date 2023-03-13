@@ -17,7 +17,7 @@ function TeamMembersModal({ open, handleClose, teamId, teamName, users }) {
           email: user.email,
           institutionName: user.institutionName,
           gradYear: user.gradYear,
-          linkedin: user.linkedin,
+          linkedin: user.linkedIn,
           github: user.github,
           devfolio: user.devfolio,
         };
@@ -48,7 +48,9 @@ function TeamMembersModal({ open, handleClose, teamId, teamName, users }) {
             variant="outlined"
             color="error"
             onClick={() => {
-              if (params.value) window.open(params.value);
+              if (params.value) {
+                window.open(params.value, "_blank");
+              }
             }}
           >
             Linkedin
@@ -67,7 +69,7 @@ function TeamMembersModal({ open, handleClose, teamId, teamName, users }) {
             variant="outlined"
             color="secondary"
             onClick={() => {
-              if (params.value) window.open(params.value);
+              if (params.value) window.open(params.value, "_blank");
             }}
           >
             Github
@@ -86,7 +88,7 @@ function TeamMembersModal({ open, handleClose, teamId, teamName, users }) {
             variant="outlined"
             color="primary"
             onClick={() => {
-              if (params.value) window.open(params.value);
+              if (params.value) window.open(params.value, "_blank");
             }}
           >
             Devfolio
