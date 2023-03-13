@@ -9,6 +9,7 @@ import IdeaDialog from "@/components/IdeaDialog/IdeaDialog";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [loading1, setLoading1] = useState(false);
   const [data, setData] = useState([]);
   const [variable, setVariable] = useState(true);
   const [teams, setTeams] = useState([]);
@@ -111,7 +112,7 @@ export default function Home() {
     }
   };
   function handleSave() {
-    setLoading(true);
+    setLoading1(true);
     // Get the updated data
 
     // const updatedData = gridRef.current.getRows();
@@ -123,7 +124,7 @@ export default function Home() {
       .then((response) => {
         // Handle success
         //console.log(response);
-        setLoading(false);
+        setLoading1(false);
         setVariable(!variable);
       })
       .catch((error) => {
@@ -326,7 +327,7 @@ export default function Home() {
                 experimentalFeatures={{ newEditingApi: true }}
               />
               <div onClick={handleSave}>
-                {loading ? <ClipLoader color="#000000" /> : "Save"}
+                {loading1 ? <ClipLoader color="#000000" /> : "Save"}
               </div>
             </div>
           </div>

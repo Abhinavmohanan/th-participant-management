@@ -17,15 +17,17 @@ export default async (req, res) => {
     }
     res.status(200).json(data);
   } else if (req.method === "POST") {
-    console.log(req.body);
-    const { data, error } = await supabaseClient
-      .from("technohack-teams")
-      .update({ comments: req.body[0].col6 })
-      .eq("id", req.body[0].id);
-    if (error) {
-      console.log(error);
+    for (let i = 0; i < req.body.length; i++) {
+      const { data, error } = await supabaseClient
+        .from("technohack-teams")
+        .update({ comments: req.body[i].col6 })
+        .eq("id", req.body[i].id);
+
+      if (error) {
+        console.log(error);
+      }
     }
-    res.status(200).json(data);
+    res.status(200).json("success");
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
