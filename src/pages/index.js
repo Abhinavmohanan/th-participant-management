@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import axios from "axios";
-import { ClockLoader } from "react-spinners";
+import { ClipLoader, ClockLoader } from "react-spinners";
 import Head from "next/head";
 import TeamMembersModal from "@/components/TeamMembersModal/TeamMembersModal";
 import IdeaDialog from "@/components/IdeaDialog/IdeaDialog";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
   const [variable, setVariable] = useState(true);
   const [teams, setTeams] = useState([]);
   const [teamName, setTeamName] = useState();
@@ -40,7 +41,7 @@ export default function Home() {
 
   const findDistinctTeamsFromUsers = (users) => {
     const distinctTeams = users
-      .map((user) => user["technohack-teams"])
+      ?.map((user) => user["technohack-teams"])
       .flat()
       .filter((team) => team.id !== null)
       .filter(
@@ -98,8 +99,37 @@ export default function Home() {
       suggestions: team.suggestions,
       tracks: team.tracks,
       isSelected: team.isSelected,
+      comments: team.comments,
     };
   });
+
+  const gridRef = React.useRef(null);
+  const onUpdate = (newData, oldData) => {
+    if (JSON.stringify(newData) != JSON.stringify(oldData)) {
+      setData([newData, ...data]);
+      console.log(newData, oldData);
+    }
+  };
+  function handleSave() {
+    setLoading(true);
+    // Get the updated data
+
+    // const updatedData = gridRef.current.getRows();
+    // console.log(updatedData);
+
+    // Send the updated data to the server using axios
+    axios
+      .post("/api/teams", data)
+      .then((response) => {
+        // Handle success
+        //console.log(response);
+        setLoading(false);
+        setVariable(!variable);
+      })
+      .catch((error) => {
+        // Handle error
+      });
+  }
 
   const columns = [
     { field: "id", headerName: "Team ID", width: 100 },
@@ -187,6 +217,13 @@ export default function Home() {
           </Button>
         ),
     },
+    {
+      field: "col6",
+      headerName: "Comments",
+      width: "200",
+      type: "string",
+      editable: true,
+    },
   ];
 
   if (loading)
@@ -263,6 +300,7 @@ export default function Home() {
                     col3: row.suggestions,
                     col4: row.tracks,
                     col5: row.isSelected,
+                    col6: row.comments,
                   };
                 })}
                 components={{
@@ -276,8 +314,20 @@ export default function Home() {
                     quickFilterProps: { debounceMs: 500 },
                   },
                 }}
+                onProcessRowUpdateError={(params) => {
+                  console.log(params);
+                }}
+                processRowUpdate={(newData, oldData) => {
+                  onUpdate(newData, oldData);
+                  return newData;
+                }}
                 autoHeight
+                editMode="row"
+                experimentalFeatures={{ newEditingApi: true }}
               />
+              <div onClick={handleSave}>
+                {loading ? <ClipLoader color="#000000" /> : "Save"}
+              </div>
             </div>
           </div>
         </div>

@@ -16,6 +16,16 @@ export default async (req, res) => {
       console.log(error);
     }
     res.status(200).json(data);
+  } else if (req.method === "POST") {
+    console.log(req.body);
+    const { data, error } = await supabaseClient
+      .from("technohack-teams")
+      .update({ comments: req.body[0].col6 })
+      .eq("id", req.body[0].id);
+    if (error) {
+      console.log(error);
+    }
+    res.status(200).json(data);
   } else {
     res.status(405).json({ message: "Method not allowed" });
   }
