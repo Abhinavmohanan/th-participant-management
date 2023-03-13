@@ -151,8 +151,8 @@ export default function Home() {
             color="secondary"
             onClick={() => {
               setIsSuggestion(false);
-              setTeamName(params.row.col1);
-              setIdea(params.row.col2);
+              setTeamName(params.row.name);
+              setIdea(params.row.idea);
               setOpen1(true);
             }}
           >
@@ -165,7 +165,7 @@ export default function Home() {
       headerName: "Suggestions",
       width: 130,
       renderCell: (params) =>
-        params.row.suggesions === null || params.row.suggestions === "" ? (
+        params.row.suggestions === null || params.row.suggestions === "" ? (
           "Nil"
         ) : (
           <Button
@@ -173,8 +173,8 @@ export default function Home() {
             color="error"
             onClick={() => {
               setIsSuggestion(true);
-              setTeamName(params.row.col1);
-              setIdea(params.row.col3);
+              setTeamName(params.row.name);
+              setIdea(params.row.suggestions);
               setOpen1(true);
             }}
           >

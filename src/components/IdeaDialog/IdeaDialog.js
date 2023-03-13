@@ -35,19 +35,18 @@ function TeamMembersModal({ open, isSuggestion, handleClose, teamName, idea }) {
         <div
           style={{
             display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            wordBreak: "break-word",
             height: "100%",
             flexGrow: 1,
+            textAlign: "justify",
+            whiteSpace: "pre-wrap",
+            fontSize: "1rem",
+            fontWeight: "500",
           }}
         >
-          <div style={{ flexGrow: 1 }}>
-            <h3
-              style={{
-                textAlign: "center",
-              }}
-            >
-              {idea}
-            </h3>
-          </div>
+          {idea}
         </div>
       </DialogContent>
     </Dialog>
