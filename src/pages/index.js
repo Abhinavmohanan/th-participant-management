@@ -32,6 +32,10 @@ export default function Home() {
     setLoading(false);
   };
 
+  setTimeout(() => {
+    getTeams();
+  }, 45000);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -327,13 +331,15 @@ export default function Home() {
                 experimentalFeatures={{ newEditingApi: true }}
               />
               <br />
-              <div style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "1rem",
-                width:"100%"
-              }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "1rem",
+                  width: "100%",
+                }}
+              >
                 <div
                   onClick={handleSave}
                   style={{
