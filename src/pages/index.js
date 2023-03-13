@@ -6,6 +6,7 @@ import { ClipLoader, ClockLoader } from "react-spinners";
 import Head from "next/head";
 import TeamMembersModal from "@/components/TeamMembersModal/TeamMembersModal";
 import IdeaDialog from "@/components/IdeaDialog/IdeaDialog";
+import { width } from "@mui/system";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -326,8 +327,31 @@ export default function Home() {
                 editMode="row"
                 experimentalFeatures={{ newEditingApi: true }}
               />
-              <div onClick={handleSave}>
-                {loading1 ? <ClipLoader color="#000000" /> : "Save"}
+              <br />
+              <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "1rem",
+                width:"100%"
+              }}>
+                <div
+                  onClick={handleSave}
+                  style={{
+                    width: "100px",
+                    height: "50px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    backgroundColor: "#3f51b5",
+                    color: "#fff",
+                    alignSelf: "center",
+                  }}
+                >
+                  {loading1 ? <ClipLoader color="#fff" /> : "Save"}
+                </div>
               </div>
             </div>
           </div>
