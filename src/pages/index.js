@@ -20,6 +20,7 @@ export default function Home() {
   const [teamId, setTeamId] = useState();
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
+  const [rows, setRows] = useState([]);
 
   useEffect(() => {
     getTeams();
@@ -31,10 +32,6 @@ export default function Home() {
     findDistinctTeamsFromUsers(response.data);
     setLoading(false);
   };
-
-  setTimeout(() => {
-    getTeams();
-  }, 45000);
 
   const handleClose = () => {
     setOpen(false);
@@ -53,6 +50,7 @@ export default function Home() {
         (team, index, self) => index === self.findIndex((t) => t.id === team.id)
       );
     setTeams(distinctTeams);
+    setRows(distinctTeams);
   };
 
   const updateToTeamSelected = async (teamId) => {
@@ -96,17 +94,17 @@ export default function Home() {
     );
   };
 
-  const rows = teams.map((team) => {
-    return {
-      id: team.id,
-      name: team.name,
-      idea: team.idea,
-      suggestions: team.suggestions,
-      tracks: team.tracks,
-      isSelected: team.isSelected,
-      comments: team.comments,
-    };
-  });
+  // const rows = teams.map((team) => {
+  //   return {
+  //     id: team.id,
+  //     name: team.name,
+  //     idea: team.idea,
+  //     suggestions: team.suggestions,
+  //     tracks: team.tracks,
+  //     isSelected: team.isSelected,
+  //     comments: team.comments,
+  //   };
+  // });
 
   const gridRef = React.useRef(null);
   const onUpdate = (newData, oldData) => {
@@ -138,14 +136,14 @@ export default function Home() {
 
   const columns = [
     { field: "id", headerName: "Team ID", width: 100 },
-    { field: "col1", headerName: "Team Name", width: 200 },
-    { field: "col4", headerName: "Tracks", width: 500 },
+    { field: "name", headerName: "Team Name", width: 200 },
+    { field: "tracks", headerName: "Tracks", width: 500 },
     {
-      field: "col2",
+      field: "idea",
       headerName: "Idea",
       width: 200,
       renderCell: (params) =>
-        params.row.col2 === null || params.row.col2 === "" ? (
+        params.row.idea === null || params.row.idea === "" ? (
           "Nil"
         ) : (
           <Button
@@ -163,11 +161,11 @@ export default function Home() {
         ),
     },
     {
-      field: "col3",
+      field: "suggestions",
       headerName: "Suggestions",
       width: 130,
       renderCell: (params) =>
-        params.row.col2 === null || params.row.col2 === "" ? (
+        params.row.suggesions === null || params.row.suggestions === "" ? (
           "Nil"
         ) : (
           <Button
@@ -201,7 +199,7 @@ export default function Home() {
       ),
     },
     {
-      field: "col5",
+      field: "isSelected",
       headerName: "Selected",
       width: "100",
       renderCell: (props) =>
@@ -223,7 +221,7 @@ export default function Home() {
         ),
     },
     {
-      field: "col6",
+      field: "comments",
       headerName: "Comments",
       width: "200",
       type: "string",
@@ -297,17 +295,18 @@ export default function Home() {
           >
             <div style={{ flexGrow: 1 }}>
               <DataGrid
-                rows={rows.map((row) => {
-                  return {
-                    id: row.id,
-                    col1: row.name,
-                    col2: row.idea,
-                    col3: row.suggestions,
-                    col4: row.tracks,
-                    col5: row.isSelected,
-                    col6: row.comments,
-                  };
-                })}
+                // rows={rows.map((row) => {
+                //   return {
+                //     id: row.id,
+                //     col1: row.name,
+                //     col2: row.idea,
+                //     col3: row.suggestions,
+                //     col4: row.tracks,
+                //     col5: row.isSelected,
+                //     col6:  row.comments ? row.comments : "",
+                //   };
+                // })}
+                rows={rows}
                 components={{
                   Toolbar: GridToolbar,
                 }}

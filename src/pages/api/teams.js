@@ -20,7 +20,7 @@ export default async (req, res) => {
     for (let i = 0; i < req.body.length; i++) {
       const { data, error } = await supabaseClient
         .from("technohack-teams")
-        .update({ comments: req.body[i].col6 })
+        .update({ comments: req.body[i].comments })
         .eq("id", req.body[i].id);
 
       if (error) {
