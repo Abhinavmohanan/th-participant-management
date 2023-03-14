@@ -137,11 +137,11 @@ export default function Home() {
   const columns = [
     { field: "id", headerName: "Team ID", width: 100 },
     { field: "name", headerName: "Team Name", width: 200 },
-    { field: "tracks", headerName: "Tracks", width: 500 },
+    { field: "tracks", headerName: "Tracks", width: 450 },
     {
       field: "idea",
       headerName: "Idea",
-      width: 200,
+      width: 150,
       renderCell: (params) =>
         params.row.idea === null || params.row.idea === "" ? (
           "Nil"
@@ -222,8 +222,8 @@ export default function Home() {
     },
     {
       field: "comments",
-      headerName: "Comments",
-      width: "200",
+      headerName: "Comments (57 Chars max)",
+      width: "490",
       type: "string",
       editable: true,
     },
@@ -290,7 +290,7 @@ export default function Home() {
               display: "flex",
               height: "100%",
               flexGrow: 1,
-              width: "90vw",
+              width: "95vw",
             }}
           >
             <div style={{ flexGrow: 1 }}>
