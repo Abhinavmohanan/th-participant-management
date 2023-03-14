@@ -222,7 +222,7 @@ export default function Home() {
     },
     {
       field: "comments",
-      headerName: "Comments",
+      headerName: "Comments (57 Chars max)",
       width: "490",
       type: "string",
       editable: true,
