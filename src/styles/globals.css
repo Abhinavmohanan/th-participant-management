@@ -33,3 +33,7 @@ a {
 * {
   box-sizing: border-box;
 }
+.cell-edit {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
